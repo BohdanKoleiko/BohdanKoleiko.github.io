@@ -56,7 +56,7 @@ certificates.forEach((cert, i) => {
             }
 
             overlayItem.style.transform = `translate(-50%, -50%) scale(${scale})`;
-         }, 50);
+         }, 20);
       }, 40);
 
       closeBtn.addEventListener("click", closeOverlay);
