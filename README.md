@@ -12,5 +12,5 @@ Technologies used in the project:
 *   Git
 
 
-This website was designed by <a href="https://www.behance.net/elizabethandriichuk">Elizabeth</a>.<br>
-If you want a website with a beautiful design, responsive and cross-browser layout just contact with me or <a href="https://www.behance.net/elizabethandriichuk">Elizabeth</a>.<br>
+This website was designed by <a href="https://www.behance.net/elizabethandriichuk" target="_blank">Elizabeth</a>.<br>
+If you want a website with a beautiful design, responsive and cross-browser layout just contact with me or <a href="https://www.behance.net/elizabethandriichuk" target="_blank">Elizabeth</a>.<br>
