@@ -1,52 +1,67 @@
-const projItems = document.querySelector(".proj__wrap");
-const navButtons = document.querySelectorAll("[class^='swiper-button']");
+if (typeof Swiper !== "undefined") {
+   const projItems = document.querySelector(".project__wrapper");
+   const navButtons = document.querySelectorAll("[class^='swiper-button']");
 
-// init Swiper:
-const swiper = new Swiper(".swiper", {
-   speed: 400,
-   direction: "horizontal",
-   parallax: true,
+   // init Swiper:
+   const swiper = new Swiper(".swiper", {
+      speed: 400,
+      direction: "horizontal",
+      parallax: true,
 
-   pagination: {
-      el: ".swiper-pagination",
-      type: "bullets",
-   },
-
-   breakpoints: {
-      1024: {
-         enabled: false,
-         navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-         },
-
-         pagination: false,
+      pagination: {
+         el: ".swiper-pagination",
+         type: "bullets",
       },
-   },
 
-   speed: 700,
-});
+      breakpoints: {
+         1024: {
+            enabled: false,
+            navigation: {
+               nextEl: ".swiper-button-next",
+               prevEl: ".swiper-button-prev",
+            },
 
-const showOrHideNavigationBtns = function (updatedWidth = 0) {
-   let windowsWidth = updatedWidth;
+            pagination: false,
+         },
+      },
 
-   if (windowsWidth > 1024) {
-      navButtons.forEach((btn) => (btn.style.visibility = "visible"));
+      speed: 700,
+   });
 
-      const mouseHover = (event) => {
-         event.type === "mouseover" ? swiper.enable() : swiper.disable();
-      };
+   const showOrHideNavigationBtns = function (updatedWidth = 0) {
+      let windowsWidth = updatedWidth;
 
-      projItems.addEventListener("mouseover", mouseHover);
-      projItems.addEventListener("mouseout", mouseHover);
-   } else {
-      navButtons.forEach((btn) => (btn.style.visibility = "hidden"));
-   }
-};
-showOrHideNavigationBtns(window.innerWidth);
+      if (windowsWidth > 1024) {
+         navButtons.forEach((btn) => (btn.style.visibility = "visible"));
 
-window.addEventListener("resize", () => {
+         const mouseHover = (event) => {
+            event.type === "mouseover" ? swiper.enable() : swiper.disable();
+         };
+
+         projItems.addEventListener("mouseover", mouseHover);
+         projItems.addEventListener("mouseout", mouseHover);
+      } else {
+         navButtons.forEach((btn) => (btn.style.visibility = "hidden"));
+      }
+   };
    showOrHideNavigationBtns(window.innerWidth);
-});
+
+   window.addEventListener("resize", () => {
+      showOrHideNavigationBtns(window.innerWidth);
+   });
+} else {
+   const swiper = document.querySelector(".swiper");
+   const swiperWrapper = document.querySelector(".swiper-wrapper");
+   const swiperSlides = document.querySelectorAll(".swiper-slide");
+
+   swiper.style.margin = "0 auto";
+
+   swiperWrapper.style.cssText =
+      "display: flex; column-gap: 60px; overflow-y: hidden; overflow-x: scroll; scroll-behavior: smooth; scroll-snap-stop: always; scroll-snap-type: x mandatory;";
+
+   swiperSlides.forEach(
+      (slide) => (slide.style.cssText = "flex: 1 0 70%; scroll-snap-align: start;"),
+   );
+}
 
 //# sourceMappingURL=enable-swiper.js.map

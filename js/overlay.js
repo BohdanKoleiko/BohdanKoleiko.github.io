@@ -1,16 +1,15 @@
 const overlay = document.querySelector(".overlay"),
-   overlayItem = document.querySelector(".overlay__item"),
-   overlayItemImg = document.querySelector(".overlay__item > img"),
+   overlayImg = document.querySelector(".overlay__image"),
    certificates = document.querySelectorAll(".cert__item-img"),
    closeBtn = document.querySelector(".overlay__close-btn");
 
-const initOverlay = function () {
+const initOverlay = function (scale = 0.3, opacity = 0) {
    overlay.classList.remove("active");
-   overlay.style.opacity = 0;
-   overlayItem.style.transform = "translate(-50%, -50%) scale(0.8)";
-   overlayItem.style.opacity = 0;
-   overlayItemImg.src = "";
-   overlayItemImg.alt = "";
+   overlay.style.opacity = opacity;
+   overlayImg.style.transform = `translate(-50%, -50%) scale(${scale})`;
+   overlayImg.style.opacity = opacity;
+   overlayImg.src = "";
+   overlayImg.alt = "";
    document.documentElement.style.overflow = "";
 };
 
@@ -19,45 +18,44 @@ initOverlay();
 const closeOverlay = function (event) {
    if (overlay.classList.contains("active") && event.target.tagName !== "IMG") {
       initOverlay();
+      //scale = 0.3;
    }
 
    closeBtn.removeEventListener("click", this);
    overlay.removeEventListener("click", this);
 };
 
-certificates.forEach((cert, i) => {
+certificates.forEach((cert) => {
    cert.addEventListener("click", function () {
       const img = this.children[0];
 
+      overlayImg.src = img.src;
+      overlayImg.alt = img.alt;
+      overlay.classList.add("active");
       document.documentElement.style.overflow = "hidden";
 
-      overlayItemImg.src = img.src;
-      overlayItemImg.alt = img.alt;
-
-      overlay.classList.add("active");
-
+      const increment = 0.01;
       let opacity = 0;
-      let scale = 0.5;
+      let scale = 0.3;
 
-      const intervalID = setInterval(async () => {
-         if (opacity <= 0.9) {
-            opacity += 0.1;
-            overlay.style.opacity = opacity;
-            overlayItem.style.opacity = opacity;
-         } else {
-            clearInterval(intervalID);
+      const opacityIntervalID = setInterval(() => {
+         opacity += increment;
+         overlay.style.opacity = opacity;
+         overlayImg.style.opacity = opacity;
+
+         if (opacity > 1) {
+            clearInterval(opacityIntervalID);
          }
+      }, 1);
 
-         const timeoutID = setTimeout(() => {
-            if (scale <= 0.9) {
-               scale += 0.1;
-            } else {
-               clearTimeout(timeoutID);
-            }
+      const scaleIntervalID = setInterval(() => {
+         scale += increment;
+         overlayImg.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
-            overlayItem.style.transform = `translate(-50%, -50%) scale(${scale})`;
-         }, 50);
-      }, 40);
+         if (scale > 1) {
+            clearInterval(scaleIntervalID);
+         }
+      }, 1);
 
       closeBtn.addEventListener("click", closeOverlay);
       overlay.addEventListener("click", closeOverlay);
